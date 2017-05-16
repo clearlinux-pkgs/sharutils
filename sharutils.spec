@@ -4,7 +4,7 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 2
+Release  : 3
 URL      : ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Summary  : No detailed summary available

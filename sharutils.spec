@@ -6,10 +6,10 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 5
-URL      : ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz
-Source0  : ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz
-Source99 : ftp://ftp.gnu.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
+Release  : 6
+URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
+Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
+Source99 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0
@@ -55,7 +55,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517683135
+export SOURCE_DATE_EPOCH=1521069850
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -67,7 +67,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1517683135
+export SOURCE_DATE_EPOCH=1521069850
 rm -rf %{buildroot}
 %make_install
 %find_lang sharutils

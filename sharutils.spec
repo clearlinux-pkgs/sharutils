@@ -6,7 +6,7 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 8
+Release  : 9
 URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source99 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
@@ -57,11 +57,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525011138
-export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
-export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
-export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
+export SOURCE_DATE_EPOCH=1526019661
+export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -73,7 +73,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1525011138
+export SOURCE_DATE_EPOCH=1526019661
 rm -rf %{buildroot}
 %make_install
 %find_lang sharutils

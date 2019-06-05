@@ -6,7 +6,7 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 9
+Release  : 10
 URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source99 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig

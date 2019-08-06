@@ -6,18 +6,22 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 10
+Release  : 11
 URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
-Source99 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
+Source1 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0
-Requires: sharutils-bin
-Requires: sharutils-doc
-Requires: sharutils-locales
+Requires: sharutils-bin = %{version}-%{release}
+Requires: sharutils-license = %{version}-%{release}
+Requires: sharutils-locales = %{version}-%{release}
+Requires: sharutils-man = %{version}-%{release}
 BuildRequires : bison
+BuildRequires : glibc-locale
+BuildRequires : intltool-dev
 Patch1: cve-2018-1000097.patch
+Patch2: 0001-Porting-fseeko.c-from-gnulib.patch
 
 %description
 This is the set of GNU shar utilities.
@@ -27,6 +31,7 @@ option, any later version).
 %package bin
 Summary: bin components for the sharutils package.
 Group: Binaries
+Requires: sharutils-license = %{version}-%{release}
 
 %description bin
 bin components for the sharutils package.
@@ -35,9 +40,18 @@ bin components for the sharutils package.
 %package doc
 Summary: doc components for the sharutils package.
 Group: Documentation
+Requires: sharutils-man = %{version}-%{release}
 
 %description doc
 doc components for the sharutils package.
+
+
+%package license
+Summary: license components for the sharutils package.
+Group: Default
+
+%description license
+license components for the sharutils package.
 
 
 %package locales
@@ -48,33 +62,51 @@ Group: Default
 locales components for the sharutils package.
 
 
+%package man
+Summary: man components for the sharutils package.
+Group: Default
+
+%description man
+man components for the sharutils package.
+
+
 %prep
 %setup -q -n sharutils-4.15.2
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1526019661
-export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1565098907
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1526019661
+export SOURCE_DATE_EPOCH=1565098907
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/sharutils
+cp COPYING %{buildroot}/usr/share/package-licenses/sharutils/COPYING
+cp libopts/COPYING.gplv3 %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.gplv3
+cp libopts/COPYING.lgplv3 %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.lgplv3
+cp libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.mbsd
 %make_install
 %find_lang sharutils
 
@@ -89,10 +121,23 @@ rm -rf %{buildroot}
 /usr/bin/uuencode
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/info/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man5/*
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/sharutils/COPYING
+/usr/share/package-licenses/sharutils/libopts_COPYING.gplv3
+/usr/share/package-licenses/sharutils/libopts_COPYING.lgplv3
+/usr/share/package-licenses/sharutils/libopts_COPYING.mbsd
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/shar.1
+/usr/share/man/man1/unshar.1
+/usr/share/man/man1/uudecode.1
+/usr/share/man/man1/uuencode.1
+/usr/share/man/man5/uuencode.5
 
 %files locales -f sharutils.lang
 %defattr(-,root,root,-)

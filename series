@@ -1,1 +1,2 @@
 cve-2018-1000097.patch
+0001-Porting-fseeko.c-from-gnulib.patch

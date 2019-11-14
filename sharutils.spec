@@ -6,7 +6,7 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 11
+Release  : 12
 URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source1 : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
@@ -14,6 +14,7 @@ Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-3.0 LGPL-3.0
 Requires: sharutils-bin = %{version}-%{release}
+Requires: sharutils-info = %{version}-%{release}
 Requires: sharutils-license = %{version}-%{release}
 Requires: sharutils-locales = %{version}-%{release}
 Requires: sharutils-man = %{version}-%{release}
@@ -37,13 +38,12 @@ Requires: sharutils-license = %{version}-%{release}
 bin components for the sharutils package.
 
 
-%package doc
-Summary: doc components for the sharutils package.
-Group: Documentation
-Requires: sharutils-man = %{version}-%{release}
+%package info
+Summary: info components for the sharutils package.
+Group: Default
 
-%description doc
-doc components for the sharutils package.
+%description info
+info components for the sharutils package.
 
 
 %package license
@@ -72,6 +72,7 @@ man components for the sharutils package.
 
 %prep
 %setup -q -n sharutils-4.15.2
+cd %{_builddir}/sharutils-4.15.2
 %patch1 -p1
 %patch2 -p1
 
@@ -80,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1565098907
+export SOURCE_DATE_EPOCH=1573774540
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -100,13 +101,13 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1565098907
+export SOURCE_DATE_EPOCH=1573774540
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/sharutils
-cp COPYING %{buildroot}/usr/share/package-licenses/sharutils/COPYING
-cp libopts/COPYING.gplv3 %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.gplv3
-cp libopts/COPYING.lgplv3 %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.lgplv3
-cp libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/libopts_COPYING.mbsd
+cp %{_builddir}/sharutils-4.15.2/COPYING %{buildroot}/usr/share/package-licenses/sharutils/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.gplv3 %{buildroot}/usr/share/package-licenses/sharutils/e8353ab286a6bcbb218d9df15d8aa68346ef5cf0
+cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.lgplv3 %{buildroot}/usr/share/package-licenses/sharutils/8ca3cbd336e9a13d5ee05753567d9261af4066a3
+cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/76f15ccf78ed039d563200c8db64f85d17c3d7cb
 %make_install
 %find_lang sharutils
 
@@ -120,16 +121,16 @@ cp libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/libopt
 /usr/bin/uudecode
 /usr/bin/uuencode
 
-%files doc
+%files info
 %defattr(0644,root,root,0755)
-%doc /usr/share/info/*
+/usr/share/info/sharutils.info
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/sharutils/COPYING
-/usr/share/package-licenses/sharutils/libopts_COPYING.gplv3
-/usr/share/package-licenses/sharutils/libopts_COPYING.lgplv3
-/usr/share/package-licenses/sharutils/libopts_COPYING.mbsd
+/usr/share/package-licenses/sharutils/76f15ccf78ed039d563200c8db64f85d17c3d7cb
+/usr/share/package-licenses/sharutils/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+/usr/share/package-licenses/sharutils/8ca3cbd336e9a13d5ee05753567d9261af4066a3
+/usr/share/package-licenses/sharutils/e8353ab286a6bcbb218d9df15d8aa68346ef5cf0
 
 %files man
 %defattr(0644,root,root,0755)

@@ -6,7 +6,7 @@
 #
 Name     : sharutils
 Version  : 4.15.2
-Release  : 14
+Release  : 15
 URL      : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz
 Source1  : https://mirrors.kernel.org/gnu/sharutils/sharutils-4.15.2.tar.xz.sig
@@ -81,15 +81,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1601860319
+export SOURCE_DATE_EPOCH=1664907328
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
 %configure --disable-static CFLAGS="$CFLAGS -fcommon"
 make  %{?_smp_mflags}
 
@@ -101,13 +101,13 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1601860319
+export SOURCE_DATE_EPOCH=1664907328
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/sharutils
-cp %{_builddir}/sharutils-4.15.2/COPYING %{buildroot}/usr/share/package-licenses/sharutils/8624bcdae55baeef00cd11d5dfcfa60f68710a02
-cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.gplv3 %{buildroot}/usr/share/package-licenses/sharutils/e8353ab286a6bcbb218d9df15d8aa68346ef5cf0
-cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.lgplv3 %{buildroot}/usr/share/package-licenses/sharutils/8ca3cbd336e9a13d5ee05753567d9261af4066a3
-cp %{_builddir}/sharutils-4.15.2/libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/76f15ccf78ed039d563200c8db64f85d17c3d7cb
+cp %{_builddir}/sharutils-%{version}/COPYING %{buildroot}/usr/share/package-licenses/sharutils/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/sharutils-%{version}/libopts/COPYING.gplv3 %{buildroot}/usr/share/package-licenses/sharutils/e8353ab286a6bcbb218d9df15d8aa68346ef5cf0 || :
+cp %{_builddir}/sharutils-%{version}/libopts/COPYING.lgplv3 %{buildroot}/usr/share/package-licenses/sharutils/8ca3cbd336e9a13d5ee05753567d9261af4066a3 || :
+cp %{_builddir}/sharutils-%{version}/libopts/COPYING.mbsd %{buildroot}/usr/share/package-licenses/sharutils/76f15ccf78ed039d563200c8db64f85d17c3d7cb || :
 %make_install
 %find_lang sharutils
 
